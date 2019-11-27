@@ -1,5 +1,16 @@
 ---
-title: "Start Shiny"
-output: html_document
+title: 'NCAA D3 Cross Country'
+runtime: shiny
+output: 
+  flexdashboard::flex_dashboard:
+    source_code: "https://github.com/lisafishr/NCAA-D3-Cross-Country"
+    theme: bootstrap
+    logo: logo.png
 ---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE)
+Nats19ind <- as.tibble(read.csv("~/NCAA D3XC/NCAA D3XC/Nats19ind.csv"))
+```
 
