@@ -11,8 +11,9 @@ regions <- read_csv("regions.csv")
 
 
 ```{r}
-library(dpylr)
+library(dplyr)
 Nats19ind %>%
+  filter(!is.na(PL)) %>%
   mutate(allAmerican = ifelse(PL <= 40, "ZAll American", "Not All American")) %>%
   ggplot(mapping = aes(x = Region, fill = allAmerican)) +
   geom_bar() +
@@ -20,11 +21,14 @@ Nats19ind %>%
   
 
 Nats19ind %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
-  mutate(count = 1) %>%
-  dplyr::group_by(Team)
+  mutate(allAmerican = ifelse(PL <= 40, 1, 0)) %>%
+  group_by(Region) %>%
+  summarize(count = n())
   
-
+Nats19ind %>%
+  mutate(allAmerican = ifelse(PL <= 40, 1, 0)) %>%
+  group_by(allAmerican, Region) %>%
+  summarize(count = n())
 
 
 ```
