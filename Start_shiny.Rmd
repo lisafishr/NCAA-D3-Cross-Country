@@ -9,7 +9,33 @@ output:
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-knitr::opts_chunk$set(echo = TRUE)
-Nats19ind <- as.tibble(read.csv("~/NCAA D3XC/NCAA D3XC/Nats19ind.csv"))
+library(dplyr)
+Nats19ind <- read_csv("Nats19ind.csv")
+Nats19team <- read_csv("Nats19team.csv")
+regions <- read_csv("regions.csv")
 ```
 
+
+```
+
+About
+==========================
+
+
+Category 2
+==========================
+    
+Inputs {.sidebar}
+-------------------------
+
+
+Category 1
+==========================
+
+Inputs {.sidebar}
+-------------------------
+
+
+Column 
+-------------------------
+### Barplot
