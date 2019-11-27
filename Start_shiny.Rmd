@@ -5,7 +5,6 @@ output:
   flexdashboard::flex_dashboard:
     source_code: "https://github.com/lisafishr/NCAA-D3-Cross-Country"
     theme: bootstrap
-    logo: logo.png
 ---
 
 ```{r setup, include=FALSE}
