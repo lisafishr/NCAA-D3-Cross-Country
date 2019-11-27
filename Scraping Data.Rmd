@@ -6,23 +6,59 @@ output: html_document
 ```{r}
 library(tidyverse)
 library(rvest)
-
-
-
+library(dplyr)
 ```
 
 
 ```{r}
-## Scrape 1
+# Regions and every team in them
+Regions <- read_csv("~/Desktop/Teams.csv")
 
+NewRegions <- Regions %>%
+  select(Region, Team)
+
+write.csv(NewRegions, file = "regions.csv")
+```
+
+
+```{r}
+## Team 2019
 nats19_url <- read_html("https://www.tfrrs.org/results/xc/16726/NCAA_Division_III_Cross_Country_Championships#114384")
 tables <- html_nodes(nats19_url, css = "table")
 nats19_data <- html_table(tables, header = TRUE, fill = TRUE)[[3]] 
 as_tibble(nats19_data)
 head(nats19_data, n=10)
+write.csv(nats19_data, file = "Nats19team.csv")
 
 
-list <- html_text(names, trim = TRUE)
+Nats19team <- Nats19team %>%
+  left_join(NewRegions, by = c("Team", "Region"))
 
+write.csv(Nats19team, file = "Nats19team.csv")
 ```
+
+```{r}
+## Individual 2019
+
+nats19ind_url <- read_html("https://www.tfrrs.org/results/xc/16726/NCAA_Division_III_Cross_Country_Championships#114384")
+tables <- html_nodes(nats19ind_url, css = "table")
+nats19ind_data <- html_table(tables, header = TRUE, fill = TRUE)[[4]] 
+as_tibble(nats19ind_data)
+head(nats19ind_data, n=10)
+write.csv(nats19ind_data, file = "Nats19ind.csv")
+
+Nats19ind <- Nats19ind %>%
+  rename(Team = Team)
+
+Nats19ind <- Nats19ind %>%
+  left_join(NewRegions, by = c("Team", "Region"))
+
+write.csv(Nats19ind, file = "Nats19ind.csv")
+```
+
+
+
+
+
+
 
