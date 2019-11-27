@@ -1,0 +1,25 @@
+---
+title: "Testing 1"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+```
+
+
+```{r}
+## Scrape 1
+
+nats19_url <- read_html("https://www.tfrrs.org/results/xc/16726/NCAA_Division_III_Cross_Country_Championships#114384")
+tables <- html_nodes(nats19_url, css = "table")
+nats19_data <- html_table(tables, header = TRUE, fill = TRUE)[[3]] 
+as_tibble(nats19_data)
+head(nats19_data, n=10)
+
+
+list <- html_text(names, trim = TRUE)
+
+```
+
