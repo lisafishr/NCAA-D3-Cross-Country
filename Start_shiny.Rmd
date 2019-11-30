@@ -22,21 +22,185 @@ About
 ==========================
 
 
-Category 1
+2019 Nationals by Region
 ==========================
+Row
+-------------------------------------
     
-Inputs {.sidebar}
--------------------------
+### Individuals
+    
+```{r, echo = FALSE}
+inputPanel(
+  sliderInput("slider1", label = h3("Place"), min = 1, 
+        max = 277, value = c(1, 277), sep = ""),
+  textInput("text", label = h3("Search"), value = NULL , placeholder = "Eg. St. Olaf")
+)
+
+renderTable({ 
+Nats19ind %>% 
+  select(PL, NAME, Team, TIME, Region) %>%
+  filter(NAME %in% NAME[str_detect(.$NAME, input$text)] | 
+         PL %in% PL[str_detect(.$PL, input$text)] | 
+         Team %in% Team[str_detect(.$Team, input$text)] | 
+         Region %in% Region[str_detect(.$Region, input$text)] ) %>%
+  filter(PL >= input$slider1[1], PL <= input$slider1[2])
+}) 
+
+```
+   
+Row
+-------------------------------------
+    
+### Regional Distribution
+  
+```{r}
+renderPlot({
+Nats19ind %>%
+  filter(!is.na(PL)) %>%
+  filter(PL >= input$slider1[1], PL <= input$slider1[2]) %>%
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
+  mutate(allAmerican = allAmerican %>% fct_rev()) %>%
+  ggplot(mapping = aes(x = Region, fill = allAmerican)) +
+  geom_bar() +
+  labs(title = "2019 NCAA Participants", fill = "All Americans")
+})
+```
+  
 
 
 
-Category 2
+2018 Nationals by Region
 ==========================
+Row
+-------------------------------------
+    
+### Individuals
+    
+```{r, echo = FALSE}
+inputPanel(
+  sliderInput("slider1", label = h3("Place"), min = 1, 
+        max = 277, value = c(1, 277), sep = ""),
+  textInput("text", label = h3("Search"), value = NULL , placeholder = "Eg. St. Olaf")
+)
 
-Inputs {.sidebar}
--------------------------
+renderTable({ 
+Nats19ind %>% 
+  select(PL, NAME, Team, TIME, Region) %>%
+  filter(NAME %in% NAME[str_detect(.$NAME, input$text)] | 
+         PL %in% PL[str_detect(.$PL, input$text)] | 
+         Team %in% Team[str_detect(.$Team, input$text)] | 
+         Region %in% Region[str_detect(.$Region, input$text)] ) %>%
+  filter(PL >= input$slider1[1], PL <= input$slider1[2])
+}) 
 
+```
+   
+Row
+-------------------------------------
+    
+### Regional Distribution
+  
+```{r}
+renderPlot({
+Nats19ind %>%
+  filter(!is.na(PL)) %>%
+  filter(PL >= input$slider1[1], PL <= input$slider1[2]) %>%
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
+  mutate(allAmerican = allAmerican %>% fct_rev()) %>%
+  ggplot(mapping = aes(x = Region, fill = allAmerican)) +
+  geom_bar() +
+  labs(title = "2019 NCAA Participants", fill = "All Americans")
+})
+```
+  
 
-Column 
--------------------------
-### Barplot
+2017 Nationals by Region
+==========================
+Row
+-------------------------------------
+    
+### Individuals
+    
+```{r, echo = FALSE}
+inputPanel(
+  sliderInput("slider1", label = h3("Place"), min = 1, 
+        max = 277, value = c(1, 277), sep = ""),
+  textInput("text", label = h3("Search"), value = NULL , placeholder = "Eg. St. Olaf")
+)
+
+renderTable({ 
+Nats19ind %>% 
+  select(PL, NAME, Team, TIME, Region) %>%
+  filter(NAME %in% NAME[str_detect(.$NAME, input$text)] | 
+         PL %in% PL[str_detect(.$PL, input$text)] | 
+         Team %in% Team[str_detect(.$Team, input$text)] | 
+         Region %in% Region[str_detect(.$Region, input$text)] ) %>%
+  filter(PL >= input$slider1[1], PL <= input$slider1[2])
+}) 
+
+```
+   
+Row
+-------------------------------------
+    
+### Regional Distribution
+  
+```{r}
+renderPlot({
+Nats19ind %>%
+  filter(!is.na(PL)) %>%
+  filter(PL >= input$slider1[1], PL <= input$slider1[2]) %>%
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
+  mutate(allAmerican = allAmerican %>% fct_rev()) %>%
+  ggplot(mapping = aes(x = Region, fill = allAmerican)) +
+  geom_bar() +
+  labs(title = "2019 NCAA Participants", fill = "All Americans")
+})
+```
+  
+
+2016 Nationals by Region
+==========================
+Row
+-------------------------------------
+    
+### Individuals
+    
+```{r, echo = FALSE}
+inputPanel(
+  sliderInput("slider1", label = h3("Place"), min = 1, 
+        max = 277, value = c(1, 277), sep = ""),
+  textInput("text", label = h3("Search"), value = NULL , placeholder = "Eg. St. Olaf")
+)
+
+renderTable({ 
+Nats19ind %>% 
+  select(PL, NAME, Team, TIME, Region) %>%
+  filter(NAME %in% NAME[str_detect(.$NAME, input$text)] | 
+         PL %in% PL[str_detect(.$PL, input$text)] | 
+         Team %in% Team[str_detect(.$Team, input$text)] | 
+         Region %in% Region[str_detect(.$Region, input$text)] ) %>%
+  filter(PL >= input$slider1[1], PL <= input$slider1[2])
+}) 
+
+```
+   
+Row
+-------------------------------------
+    
+### Regional Distribution
+  
+```{r}
+renderPlot({
+Nats19ind %>%
+  filter(!is.na(PL)) %>%
+  filter(PL >= input$slider1[1], PL <= input$slider1[2]) %>%
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
+  mutate(allAmerican = allAmerican %>% fct_rev()) %>%
+  ggplot(mapping = aes(x = Region, fill = allAmerican)) +
+  geom_bar() +
+  labs(title = "2019 NCAA Participants", fill = "All Americans")
+})
+```
+  
+
