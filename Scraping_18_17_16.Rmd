@@ -1,0 +1,42 @@
+---
+title: "Scraping_18_17_16"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(dplyr)
+
+Regions <- read_csv("regions.csv")
+```
+
+
+
+```{r}
+## Individuals 2019
+
+nats18ind_url <- read_html("https://www.tfrrs.org/results/xc/15028/NCAA_Division_III_Cross_Country_Championships")
+tables <- html_nodes(nats18ind_url, css = "table")
+nats18ind_data <- html_table(tables, header = TRUE, fill = TRUE)[[2]] 
+as_tibble(nats18ind_data)
+head(nats18ind_data, n=10)
+write.csv(nats18ind_data, file = "Nats18ind.csv")
+```
+
+
+```{r}
+Nats18ind <- read_csv("Nats18ind.csv")
+Nats18ind <- Nats18ind %>%
+  rename(Team = TEAM)
+
+Nats18ind <- Nats18ind %>%
+  left_join(Regions, by = c("Team"))
+
+write.csv(Nats18ind, file = "Nats18ind.csv")
+```
+
+
+
+
+
