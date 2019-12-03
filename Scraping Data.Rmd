@@ -55,8 +55,7 @@ Nats19ind <- Nats19ind %>%
 
 Nats19ind <- Nats19ind %>%
   left_join(Regions, by = c("Team")) %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  %>%
-  mutate(allAmerican = allAmerican %>% fct_rev())
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  
 
 write.csv(Nats19ind, file = "Nats19ind.csv")
 ```

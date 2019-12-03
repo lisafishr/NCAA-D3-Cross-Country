@@ -32,8 +32,7 @@ Nats18ind <- Nats18ind %>%
 
 Nats18ind <- Nats18ind %>%
   left_join(Regions, by = c("Team")) %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  %>%
-  mutate(allAmerican = allAmerican %>% fct_rev()) 
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  
 
 write.csv(Nats18ind, file = "Nats18ind.csv")
 ```
@@ -59,8 +58,7 @@ Nats17ind <- Nats17ind %>%
 
 Nats17ind <- Nats17ind %>%
   left_join(Regions, by = c("Team")) %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  %>%
-  mutate(allAmerican = allAmerican %>% fct_rev())
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant")) 
   
 
 write.csv(Nats17ind, file = "Nats17ind.csv")
@@ -85,8 +83,7 @@ Nats16ind <- Nats16ind %>%
 
 Nats16ind <- Nats16ind %>%
   left_join(Regions, by = c("Team")) %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  %>%
-  mutate(allAmerican = allAmerican %>% fct_rev())
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  
 
 write.csv(Nats16ind, file = "Nats16ind.csv")
 ```
