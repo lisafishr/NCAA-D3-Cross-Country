@@ -136,7 +136,7 @@ inputPanel(
 renderTable({ 
 Nats17ind %>%
   mutate(TIME = as.character(TIME)) %>%
-  select(PL, NAME, Team, TIME, Region) %>%
+  select(PL, NAME, Team, YEAR, TIME, Region) %>%
   filter(NAME %in% NAME[str_detect(.$NAME, input$text3)] | 
          PL %in% PL[str_detect(.$PL, input$text3)] | 
          Team %in% Team[str_detect(.$Team, input$text3)] | 
@@ -184,7 +184,7 @@ inputPanel(
 renderTable({ 
 Nats16ind %>%
   mutate(TIME = as.character(TIME)) %>%
-  select(PL, NAME, Team, TIME, Region) %>%
+  select(PL, NAME, Team, YEAR, TIME, Region) %>%
   filter(NAME %in% NAME[str_detect(.$NAME, input$text4)] | 
          PL %in% PL[str_detect(.$PL, input$text4)] | 
          Team %in% Team[str_detect(.$Team, input$text4)] | 
