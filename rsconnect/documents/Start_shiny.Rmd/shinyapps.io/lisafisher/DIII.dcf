@@ -1,0 +1,12 @@
+name: DIII
+title: DIII
+username:
+account: lisafisher
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1551505
+bundleId: 2633788
+url: https://lisafisher.shinyapps.io/DIII/
+when: 1575325536.06224
+asMultiple: FALSE
+asStatic: FALSE
