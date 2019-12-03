@@ -1,5 +1,5 @@
 ---
-title: 'NCAA D3 Cross Country'
+title: 'D3 Cross Country Championships'
 runtime: shiny
 output: 
   flexdashboard::flex_dashboard:
@@ -10,17 +10,18 @@ output:
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(dplyr)
+library(rsconnect)
 Nats19ind <- read_csv("Nats19ind.csv")
 Nats18ind <- read_csv("Nats18ind.csv")
-Nats19team <- read_csv("Nats19team.csv")
+Nats17ind <- read_csv("Nats17ind.csv")
+Nats16ind <- read_csv("Nats16ind.csv")
 regions <- read_csv("regions.csv")
 ```
 
 
 ```
 
-About
-==========================
+
 
 
 2019 Nationals by Region
@@ -38,13 +39,13 @@ inputPanel(
 )
 
 renderTable({ 
-Nats19ind %>% 
+Nats19ind %>%
   select(PL, NAME, Team, YEAR, TIME, Region) %>%
   filter(NAME %in% NAME[str_detect(.$NAME, input$text)] | 
          PL %in% PL[str_detect(.$PL, input$text)] | 
          Team %in% Team[str_detect(.$Team, input$text)] | 
          Region %in% Region[str_detect(.$Region, input$text)] ) %>%
-  filter(PL >= input$slider1[1], PL <= input$slider1[2])
+  filter(PL >= input$slider1[1], PL <= input$slider1[2]) 
 }) 
 
 ```
@@ -57,12 +58,14 @@ Row
 ```{r}
 renderPlot({
 Nats19ind %>%
-  filter(!is.na(PL)) %>%
+  filter(!is.na(PL))  %>%
+  mutate(PL = as.character(PL)) %>%  
   filter(PL >= input$slider1[1], PL <= input$slider1[2]) %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
   mutate(allAmerican = allAmerican %>% fct_rev()) %>%
   ggplot(mapping = aes(x = Region, fill = allAmerican)) +
   geom_bar() +
+  scale_fill_manual(values=c("#3399CC", "#FF6666")) +
+  theme(legend.box.background = element_rect(colour = "black")) +
   labs(title = "2019 NCAA Participants", fill = "All Americans")
 })
 ```
@@ -85,7 +88,8 @@ inputPanel(
 )
 
 renderTable({ 
-Nats18ind %>% 
+Nats18ind %>%  
+  mutate(TIME = as.character(TIME))  %>%
   select(PL, NAME, Team, YEAR, TIME, Region) %>%
   filter(NAME %in% NAME[str_detect(.$NAME, input$text1)] | 
          PL %in% PL[str_detect(.$PL, input$text1)] | 
@@ -106,10 +110,11 @@ renderPlot({
 Nats18ind %>%
   filter(!is.na(PL)) %>%
   filter(PL >= input$slider2[1], PL <= input$slider2[2]) %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
   mutate(allAmerican = allAmerican %>% fct_rev()) %>%
   ggplot(mapping = aes(x = Region, fill = allAmerican)) +
   geom_bar() +
+  scale_fill_manual(values=c("#3399CC", "#FF6666")) +
+  theme(legend.box.background = element_rect(colour = "black")) +
   labs(title = "2018 NCAA Participants", fill = "All Americans")
 })
 ```
@@ -124,19 +129,20 @@ Row
     
 ```{r, echo = FALSE}
 inputPanel(
-  sliderInput("slider1", label = h3("Place"), min = 1, 
+  sliderInput("slider3", label = h3("Place"), min = 1, 
         max = 277, value = c(1, 277), sep = ""),
-  textInput("text", label = h3("Search"), value = NULL , placeholder = "Eg. St. Olaf")
+  textInput("text2", label = h3("Search"), value = NULL , placeholder = "Eg. St. Olaf")
 )
 
 renderTable({ 
-Nats19ind %>% 
+Nats17ind %>%
+  mutate(TIME = as.character(TIME)) %>%
   select(PL, NAME, Team, TIME, Region) %>%
-  filter(NAME %in% NAME[str_detect(.$NAME, input$text)] | 
-         PL %in% PL[str_detect(.$PL, input$text)] | 
-         Team %in% Team[str_detect(.$Team, input$text)] | 
-         Region %in% Region[str_detect(.$Region, input$text)] ) %>%
-  filter(PL >= input$slider1[1], PL <= input$slider1[2])
+  filter(NAME %in% NAME[str_detect(.$NAME, input$text2)] | 
+         PL %in% PL[str_detect(.$PL, input$text2)] | 
+         Team %in% Team[str_detect(.$Team, input$text2)] | 
+         Region %in% Region[str_detect(.$Region, input$text2)] ) %>%
+  filter(PL >= input$slider3[1], PL <= input$slider3[2])
 }) 
 
 ```
@@ -148,14 +154,14 @@ Row
   
 ```{r}
 renderPlot({
-Nats19ind %>%
-  filter(!is.na(PL)) %>%
+Nats17ind %>%
+  filter(!is.na(PL))  %>%
   filter(PL >= input$slider1[1], PL <= input$slider1[2]) %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
   mutate(allAmerican = allAmerican %>% fct_rev()) %>%
   ggplot(mapping = aes(x = Region, fill = allAmerican)) +
   geom_bar() +
-  labs(title = "2019 NCAA Participants", fill = "All Americans")
+  scale_fill_manual(values=c("#3399CC", "#FF6666")) +
+  labs(title = "2017 NCAA Participants", fill = "All Americans")
 })
 ```
   
@@ -169,19 +175,22 @@ Row
     
 ```{r, echo = FALSE}
 inputPanel(
-  sliderInput("slider1", label = h3("Place"), min = 1, 
+  sliderInput("slider4", label = h3("Place"), min = 1, 
         max = 277, value = c(1, 277), sep = ""),
-  textInput("text", label = h3("Search"), value = NULL , placeholder = "Eg. St. Olaf")
-)
+  textInput("text4", label = h3("Search"), value = NULL , placeholder = "Eg. St. Olaf")
+  )
+
+
 
 renderTable({ 
-Nats19ind %>% 
+Nats16ind %>%
+  mutate(TIME = as.character(TIME)) %>%
   select(PL, NAME, Team, TIME, Region) %>%
-  filter(NAME %in% NAME[str_detect(.$NAME, input$text)] | 
-         PL %in% PL[str_detect(.$PL, input$text)] | 
-         Team %in% Team[str_detect(.$Team, input$text)] | 
-         Region %in% Region[str_detect(.$Region, input$text)] ) %>%
-  filter(PL >= input$slider1[1], PL <= input$slider1[2])
+  filter(NAME %in% NAME[str_detect(.$NAME, input$text4)] | 
+         PL %in% PL[str_detect(.$PL, input$text4)] | 
+         Team %in% Team[str_detect(.$Team, input$text4)] | 
+         Region %in% Region[str_detect(.$Region, input$text4)] ) %>%
+  filter(PL >= input$slider4[1], PL <= input$slider4[2])
 }) 
 
 ```
@@ -193,14 +202,15 @@ Row
   
 ```{r}
 renderPlot({
-Nats19ind %>%
+Nats16ind %>%
   filter(!is.na(PL)) %>%
-  filter(PL >= input$slider1[1], PL <= input$slider1[2]) %>%
-  mutate(allAmerican = ifelse(PL <= 40, "All American", "Not All American")) %>%
+  filter(PL >= input$slider4[1], PL <= input$slider4[2]) %>%
   mutate(allAmerican = allAmerican %>% fct_rev()) %>%
   ggplot(mapping = aes(x = Region, fill = allAmerican)) +
   geom_bar() +
-  labs(title = "2019 NCAA Participants", fill = "All Americans")
+  scale_fill_manual(values=c("#3399CC", "#FF6666"))  +
+  theme(legend.box.background = element_rect(colour = "black")) +
+  labs(title = "2016 NCAA Participants", fill = "All Americans")
 })
 ```
   
