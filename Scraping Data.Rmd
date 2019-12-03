@@ -46,15 +46,24 @@ nats19ind_data <- html_table(tables, header = TRUE, fill = TRUE)[[4]]
 as_tibble(nats19ind_data)
 head(nats19ind_data, n=10)
 write.csv(nats19ind_data, file = "Nats19ind.csv")
+```
+
+```{r}
+Nats19ind <- read_csv("Nats19ind.csv")
+Nats19ind <- Nats19ind %>%
+  rename(Team = TEAM)
 
 Nats19ind <- Nats19ind %>%
-  rename(Team = Team)
-
-Nats19ind <- Nats19ind %>%
-  left_join(NewRegions, by = c("Team", "Region"))
+  left_join(Regions, by = c("Team")) %>%
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  %>%
+  mutate(allAmerican = allAmerican %>% fct_rev())
 
 write.csv(Nats19ind, file = "Nats19ind.csv")
 ```
+
+
+
+
 
 
 

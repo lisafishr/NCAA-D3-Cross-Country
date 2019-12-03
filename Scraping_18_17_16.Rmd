@@ -14,7 +14,7 @@ Regions <- read_csv("regions.csv")
 
 
 ```{r}
-## Individuals 2019
+## Individuals 2018
 
 nats18ind_url <- read_html("https://www.tfrrs.org/results/xc/15028/NCAA_Division_III_Cross_Country_Championships")
 tables <- html_nodes(nats18ind_url, css = "table")
@@ -31,12 +31,63 @@ Nats18ind <- Nats18ind %>%
   rename(Team = TEAM)
 
 Nats18ind <- Nats18ind %>%
-  left_join(Regions, by = c("Team"))
+  left_join(Regions, by = c("Team")) %>%
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  %>%
+  mutate(allAmerican = allAmerican %>% fct_rev()) 
 
 write.csv(Nats18ind, file = "Nats18ind.csv")
 ```
 
 
 
+```{r}
+## Individuals 2017
 
+nats17ind_url <- read_html("https://www.tfrrs.org/results/xc/13424/NCAA_Division_III_Cross_Country_Championships")
+tables <- html_nodes(nats17ind_url, css = "table")
+nats17ind_data <- html_table(tables, header = TRUE, fill = TRUE)[[4]] 
+as_tibble(nats17ind_data)
+head(nats17ind_data, n=10)
+write.csv(nats17ind_data, file = "Nats17ind.csv")
+```
+
+
+```{r}
+Nats17ind <- read_csv("Nats17ind.csv")
+Nats17ind <- Nats17ind %>%
+  rename(Team = TEAM)
+
+Nats17ind <- Nats17ind %>%
+  left_join(Regions, by = c("Team")) %>%
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  %>%
+  mutate(allAmerican = allAmerican %>% fct_rev())
+  
+
+write.csv(Nats17ind, file = "Nats17ind.csv")
+```
+
+```{r}
+## Individuals 2016
+
+nats16ind_url <- read_html("https://www.tfrrs.org/results/xc/11260/NCAA_Division_III_Cross_Country_Championships")
+tables <- html_nodes(nats16ind_url, css = "table")
+nats16ind_data <- html_table(tables, header = TRUE, fill = TRUE)[[4]] 
+as_tibble(nats16ind_data)
+head(nats16ind_data, n=10)
+write.csv(nats16ind_data, file = "Nats16ind.csv")
+```
+
+
+```{r}
+Nats16ind <- read_csv("Nats16ind.csv")
+Nats16ind <- Nats16ind %>%
+  rename(Team = TEAM)
+
+Nats16ind <- Nats16ind %>%
+  left_join(Regions, by = c("Team")) %>%
+  mutate(allAmerican = ifelse(PL <= 40, "All American", "Participant"))  %>%
+  mutate(allAmerican = allAmerican %>% fct_rev())
+
+write.csv(Nats16ind, file = "Nats16ind.csv")
+```
 
